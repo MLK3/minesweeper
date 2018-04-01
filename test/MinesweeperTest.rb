@@ -39,8 +39,9 @@ class MinesweeperTest < Test::Unit::TestCase
 
   def test_explode
     @game.play(3, 0)
-    assert_equal(false,  @game.still_playing?)
-    assert_equal(false,  @game.victory?)
+    assert_equal(false, @game.still_playing?)
+    assert_equal(false, @game.victory?)
+    assert_equal(false, @game.play(0, 0))
   end
 
   def test_play_clicked_cell
@@ -99,6 +100,5 @@ class MinesweeperTest < Test::Unit::TestCase
     assert_equal(false, @game.still_playing?)
     assert_equal(true, @game.victory?)
   end
-
 
 end

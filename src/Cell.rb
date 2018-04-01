@@ -1,3 +1,4 @@
+# Representa uma célula do tabuleiro
 class Cell
     attr_reader :x
     attr_reader :y
@@ -26,6 +27,8 @@ class Cell
       @has_flag
     end
 
+    # Adiciona uma bandeira se a célula ainda não foi descoberta ou remove a bandeira preexistente. 
+    # Retorna um booleano informando se a jogada foi válida.
     def flag   
       valid = !@uncovered  
       @has_flag = !@has_flag if valid
