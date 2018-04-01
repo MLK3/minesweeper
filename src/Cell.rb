@@ -3,6 +3,7 @@ class Cell
     attr_reader :y
     attr_writer :has_bomb
     attr_reader :number_adj_bombs
+    attr_reader :uncovered
     
     def initialize(x, y)
         @x = x

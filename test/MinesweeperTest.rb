@@ -17,9 +17,6 @@ class MinesweeperTest < Test::Unit::TestCase
                "2#311\n"\
                "2#200\n"
     assert_equal(expected, @game.board_state({full_xray: true}))
-
-    assert_equal(true,  @game.still_playing?)
-    assert_equal(false, @game.victory?)
   end
 
   def test_play_1
@@ -81,17 +78,21 @@ class MinesweeperTest < Test::Unit::TestCase
   def test_victory
     @game.play(0, 0)
     @game.play(0, 1)
-    @game.play(0, 1)
+    @game.play(0, 2)
     assert_equal(true,  @game.still_playing?)
     assert_equal(false, @game.victory?)
-    @game.play(1, 0)
+    @game.play(1, 0) 
+    # (1,1) and (1,2) are bombs -> skip
     @game.play(2, 0)
     @game.play(2, 1)
     @game.play(2, 2)
     assert_equal(true,  @game.still_playing?)
     assert_equal(false, @game.victory?)
-    @game.play(3, 1)
+    # (3,0) is a bomb -> skip
+    @game.play(3, 1) 
     @game.play(3, 2)
+    assert_equal(true,  @game.still_playing?)
+    assert_equal(false, @game.victory?)
     @game.play(4, 0)
     @game.play(4, 1)
     @game.play(4, 2)

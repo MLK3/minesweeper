@@ -6,9 +6,6 @@ class Minesweeper
 
   def initialize(width, height, num_mines, mines_positions = nil)
     
-    @still_playing = true
-    @victory = false
-
     @board = Array.new(height) { Array.new(width) }
     (0..height-1).each do |row|
       (0..width-1).each do |col|              
@@ -24,6 +21,9 @@ class Minesweeper
         for_each_neighbor(cell) { |cell_n| cell_n.add_adjacent_bomb }
       end
     end
+    
+    @exploded = false
+    
   end
 
   def for_each_neighbor(cell) 
@@ -39,18 +39,18 @@ class Minesweeper
     
 
   def still_playing?
-    @still_playing
+    not (@exploded or victory?)
   end
 
   def play(x, y)
     cell = @board[y][x]
     valid = cell.click
-    @still_playing = !cell.exploded?
-
-    if @still_playing and valid and cell.number_adj_bombs == 0
+    @exploded = cell.exploded?
+    
+    if not @exploded and valid and cell.number_adj_bombs == 0
       for_each_neighbor(cell) { |cell_n| expand(cell_n) }
     end
-
+    
     puts board_state(true) << "\n"
     return valid
   end
@@ -64,17 +64,12 @@ class Minesweeper
     end
   end
 
-  def flag(x, y)
-    cell = @board[y][x]
-    cell.flag
-  end
-
-  def check_victory
-    @board.
+  def flag(x, y)    
+    @board[y][x].flag
   end
 
   def victory?
-      false
+    not @board.flatten.any? { |cell| not cell.uncovered and not cell.has_bomb?}
   end
 
   def board_state(options = {})    
