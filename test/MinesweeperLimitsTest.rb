@@ -33,4 +33,19 @@ class MinesweeperLimitsTest < Test::Unit::TestCase
     end
   end
 
+  def test_big_game
+    width, height, num_mines = 1000, 1000, 100000
+    assert_nothing_raised do 
+      Minesweeper.new(width, height, num_mines)
+    end
+  end
+
+  def test_big_game_many_mines
+    width, height, num_mines = 1000, 1000, 500000
+    assert_nothing_raised do 
+      Minesweeper.new(width, height, num_mines)
+    end
+  end
+
+
 end

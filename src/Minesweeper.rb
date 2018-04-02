@@ -41,7 +41,7 @@ class Minesweeper
     @exploded = false
   end
 
-  def for_each_neighbor(cell) 
+  private def for_each_neighbor(cell) 
     # Define range x e y dos vizinhos respeitando os limites do board
     range_x = ([0,cell.x-1].max .. [cell.x+1,@board[cell.y].size-1].min)
     range_y = ([0,cell.y-1].max .. [cell.y+1,@board.size-1].min)
@@ -72,19 +72,18 @@ class Minesweeper
     valid = cell.click
     @exploded = cell.exploded?
     
-    if not @exploded and valid and cell.number_adj_bombs == 0
-      for_each_neighbor(cell) { |cell_n| expand(cell_n) }
-    end
+    expand(cell) if not @exploded 
     
     return valid
   end
 
-  def expand(cell)
-
-    return if cell.has_bomb? or cell.has_flag?
-    valid = cell.click
-    if valid and cell.number_adj_bombs == 0
-      for_each_neighbor(cell) { |cell_n| expand(cell_n) }      
+  private def expand(cell)
+  
+    cell.click
+    if cell.number_adj_bombs == 0
+      for_each_neighbor(cell) do |cell_n| 
+        expand(cell_n) if not (cell_n.uncovered or cell.has_bomb? or cell.has_flag?)
+      end
     end
   end
 

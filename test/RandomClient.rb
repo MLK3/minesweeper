@@ -2,9 +2,10 @@ require_relative "../src/Minesweeper"
 require_relative "../src/SimplePrinter"
 require_relative "../src/ColorPrinter"
 
-width, height, num_mines = 20, 5, 10
+width, height, num_mines = 20, 5, 5
 game = Minesweeper.new(width, height, num_mines)
-printer = ColorPrinter.new
+#printer = ColorPrinter.new
+printer = SimplePrinter.new
 
 while game.still_playing?
   x, y = rand(width), rand(height)
@@ -21,5 +22,5 @@ if game.victory?
   puts "Você venceu!"
 else
   puts "Você perdeu! As minas eram:"
-  ColorPrinter.new.print(game.board_state(xray: true))
+  printer.print(game.board_state(xray: true))
 end

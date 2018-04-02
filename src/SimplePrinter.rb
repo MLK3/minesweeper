@@ -1,3 +1,4 @@
+# Imprime o estado do jogo no terminal
 class SimplePrinter
 
     def print(board_state)

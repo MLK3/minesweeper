@@ -1,3 +1,5 @@
+# Imprime estado do jogo no terminal usando algumas cores
+# Funciona no terminal de OS X, Windows e Linux
 class ColorPrinter
 
   def print(board_state)
@@ -5,22 +7,22 @@ class ColorPrinter
     lines.each do |line|
       str_line = "|"
       line.chars.each do |cell|
-        str_line << color_cell(cell) << "|"
+        str_line << format_cell(cell) << "|"
       end      
       puts(str_line)
     end
   end
 
-  def color_cell(cell)
+  def format_cell(cell)
     case cell
     when '.'
-      color(' ', 44) #bg blue
+      color(' ', 44)  #bg blue
     when '#'
       color(cell, 41) #bg red
     when 'F'
       color(cell, 43) #bg brown
     when '0'
-      color(' ', 40) # bg black
+      ' '
     else
       cell
     end
