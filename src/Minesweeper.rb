@@ -118,19 +118,3 @@ class Minesweeper
   end
 
 end
-
-
-if __FILE__ == $0
-
-  require_relative 'SimplePrinter'
-  require_relative 'ColorPrinter'
-
-  width, height, num_mines = 3, 3, 1
-  game = Minesweeper.new(width, height, num_mines)
-  
-  game.play(0,2)
-
-  ColorPrinter.new.print(game.board_state)
-  
-end
-
