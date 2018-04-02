@@ -90,6 +90,7 @@ class Minesweeper
   # Adiciona uma bandeira a uma célula ainda não descoberta ou remove a bandeira preexistente de uma célula. 
   # Retorna um booleano informando se a jogada foi válida.
   def flag(x, y)    
+    return false if @exploded
     @board[y][x].flag
   end
 

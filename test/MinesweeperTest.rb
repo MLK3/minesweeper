@@ -42,6 +42,7 @@ class MinesweeperTest < Test::Unit::TestCase
     assert_equal(false, @game.still_playing?)
     assert_equal(false, @game.victory?)
     assert_equal(false, @game.play(0, 0))
+    assert_equal(false, @game.flag(1, 0))
   end
 
   def test_play_clicked_cell
