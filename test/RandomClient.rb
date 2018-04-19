@@ -3,7 +3,7 @@ require_relative "../src/SimplePrinter"
 require_relative "../src/ColorPrinter"
 
 width, height, num_mines = 20, 5, 5
-game = Minesweeper.new(width, height, num_mines)
+game = Minesweeper.new_game(width, height, num_mines)
 #printer = ColorPrinter.new
 printer = SimplePrinter.new
 

@@ -8,7 +8,7 @@ class MinesweeperTest < Test::Unit::TestCase
   # 2 B 2 0 0
   def setup
     width, height, num_mines = 5, 3, 3
-    @game = Minesweeper.new(width, height, num_mines, [[3,0], [1,1], [1,2]])
+    @game = Minesweeper.new_game(width, height, num_mines, [[3,0], [1,1], [1,2]])
   end
 
   def test_initial_status
@@ -53,6 +53,10 @@ class MinesweeperTest < Test::Unit::TestCase
   def test_play_flag_cell
     @game.flag(0, 0)
     assert_equal(false, @game.play(0, 0))
+    expected = "F....\n"\
+               ".....\n"\
+               ".....\n"
+    assert_equal(expected, @game.board_state)
   end
 
   def test_flag
@@ -75,6 +79,10 @@ class MinesweeperTest < Test::Unit::TestCase
   def test_invalid_flag
     assert_equal(true,  @game.play(0, 0))
     assert_equal(false, @game.flag(0, 0))
+    expected = "1....\n"\
+               ".....\n"\
+               ".....\n"
+    assert_equal(expected, @game.board_state)
   end
 
   def test_victory
@@ -101,5 +109,4 @@ class MinesweeperTest < Test::Unit::TestCase
     assert_equal(false, @game.still_playing?)
     assert_equal(true, @game.victory?)
   end
-
 end

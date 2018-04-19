@@ -1,17 +1,27 @@
 require_relative 'Cell'
 require 'set'
+require 'yaml'
 
 # Engine para o jogo Minesweeper
 class Minesweeper
 
-  attr_reader :board
+  attr_accessor :board
 
-  def initialize(width, height, num_mines, mines_positions = nil)
-    
+  def initialize
+    @exploded = false
+  end
+
+  def self.new_game(width, height, num_mines, mines_positions = nil)
+    game = Minesweeper.new
+    game.create_game(width, height, num_mines, mines_positions)
+    return game
+  end
+
+  def create_game(width, height, num_mines, mines_positions)
     if width <= 0 or height <=0 or num_mines > width * height
       raise ArgumentError.new("Invalid parameters to initialize Minesweeper game")
     end
-
+    
     # Cria o board
     @board = Array.new(height) { Array.new(width) }
     (0..height-1).each do |row|
@@ -38,7 +48,18 @@ class Minesweeper
       for_each_neighbor(cell) { |cell_n| cell_n.add_adjacent_bomb }
     end
     
-    @exploded = false
+  end
+
+  def self.load(filename = "gamesave")
+    gamesave = IO.read(filename)
+    board = YAML.load(gamesave)
+    game = Minesweeper.new
+    game.board = board
+    return game
+  end
+
+  def save(filename = "gamesave")
+    IO.write(filename, YAML.dump(@board))
   end
 
   private def for_each_neighbor(cell) 
@@ -119,3 +140,5 @@ class Minesweeper
   end
 
 end
+
+
